@@ -9,8 +9,6 @@ class ScoreboardManager
     this.score = 0;
     this.playerName = "";
 
-
-
   }
 
   initBoard(object){
@@ -34,8 +32,9 @@ class ScoreboardManager
 
 
       console.log(this.scoreboard)
+      this.count = this.count + 1;
     }
-    this.count = this.count + 1;
+
 
   }
 
