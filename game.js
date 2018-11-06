@@ -7,6 +7,7 @@ class Game
 
     this.score = 100;
     this.scoreboard.addToBoard(this.score);
+    console.log(this.scoreboard.getBoard());
 
   }
 }
