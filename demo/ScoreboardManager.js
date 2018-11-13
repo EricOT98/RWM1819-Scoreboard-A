@@ -95,7 +95,6 @@ class ScoreboardManager
       this.storageType = "session"
       if((sessionStorage.getItem('Scoreboard') === null))
       {
-
         sessionStorage.setItem('Scoreboard', JSON.stringify(this.scoreboard));
       }
       this.scoreboard = JSON.parse(sessionStorage.getItem('Scoreboard'));
@@ -153,10 +152,53 @@ class ScoreboardManager
 
   filterName(name)
   {
-    //Filter
     var wanted = this.scoreboard.filter(function(scoreboard)
     {
       return (scoreboard.name == name);
+    })
+
+    console.log(wanted)
+  }
+
+  filterTime(val)
+  {
+    this.scoreboard.sort(function(a,b){
+
+      if(val === 1){
+        return a.seconds - b.seconds
+      }
+      else if (val === -1){
+        return b.seconds - a.seconds
+      }
+    })
+  }
+
+  filterScore(val)
+  {
+    //Filter
+    //var byTime = this.scoreboard.slice(0)
+
+    this.scoreboard.sort(function(a,b){
+
+      if(val === 1){
+        return a.score - b.score
+      }
+      else if (val === -1){
+        return b.score - a.score
+      }
+    })
+  }
+
+  filterSPM(val)
+  {
+    //Filter
+    this.scoreboard.sort(function(a,b){
+      if(val === 1){
+        return a.spm - b.spm
+      }
+      else if (val === -1){
+        return b.spm - a.spm
+      }
     })
   }
 }
