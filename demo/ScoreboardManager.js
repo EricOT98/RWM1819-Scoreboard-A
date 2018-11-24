@@ -14,8 +14,6 @@ class ScoreboardManager
    this.minutes;
    this.seconds;
    this.duration=0;
-   gameNs.timerStart = false;
-   gameNs.score = "00:00";
    this.posX=405;
    this.posY=50;
 
@@ -152,12 +150,11 @@ class ScoreboardManager
 
   filterName(name)
   {
-    var wanted = this.scoreboard.filter(function(scoreboard)
+    this.scoreboard.filter(function(scoreboard)
     {
       return (scoreboard.name == name);
     })
-
-    console.log(wanted)
+    
   }
 
   filterTime(val)
