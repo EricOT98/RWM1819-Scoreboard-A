@@ -21,6 +21,7 @@ class ScoreboardManager
    this.timerActive = true;
 
 
+
   }
   startTimer(){
     this.timerActive = true;
@@ -124,7 +125,7 @@ class ScoreboardManager
   //Takes user input, adds the score which is passed
   //to the function along with a userID which is created
   //To the leaderboardd as an object in the form {name: "Aaron", score:100, playerID:1}
-  addToBoard(score)
+  addToBoard()
   {
     this.stopTimer();
 
@@ -132,16 +133,16 @@ class ScoreboardManager
     {
       var seconds = this.getTimeSeconds()
       var time = this.getDisplayTimer()
-      var spm = this.getScorePerMin(score)
-      while (this.playerName === "" || this.playerName == null)
+      //var spm = this.getScorePerMin(score)
+      while (this.playerName === "" || this.playerName == null || this.playerName.length > 7)
       {
-          this.playerName = prompt ("Please enter your name","");
+          this.playerName = prompt ("Please enter your name less than 7 charachters","");
       }
         this.playerID = this.scoreboard.length + 1;
         var object = {name: this.playerName,
-                      score: score,
+                    //  score: score,
                       time: time,
-                      spm: spm,
+                    //  spm: spm,
                       seconds: seconds,
                       playerID: this.playerID}
 
@@ -226,24 +227,22 @@ class ScoreboardManager
       tablecontents += "<td>" + "Pos" + "</td>";
       tablecontents += "<td>" + "Name"+ "</td>";
       tablecontents += "<td>" + "Time" + "</td>";
-      tablecontents += "<td>" + "Score" + "</td>";
-      tablecontents += "<td>" + "SPM" + "</td>";
       tablecontents += "</tr>";
 
       for (var i = 0; i < this.scoreboard.length; i ++)
      {
+       var pos = 1+i;
         tablecontents += "<tr>";
-        tablecontents += "<td>" + i + "</td>";
+        tablecontents += "<td>" + pos + "</td>";
         tablecontents += "<td>" + this.scoreboard[i].name + "</td>";
         tablecontents += "<td>" + this.scoreboard[i].time + "</td>";
-        tablecontents += "<td>" + this.scoreboard[i].score + "</td>";
-        tablecontents += "<td>" + this.scoreboard[i].spm + "</td>";
+        //tablecontents += "<td>" + this.scoreboard[i].score + "</td>";
+        //tablecontents += "<td>" + this.scoreboard[i].spm + "</td>";
         tablecontents += "</tr>";
      }
      tablecontents += "</table>";
-     document.getElementById("tableHeader").style.display = "block";
-     document.getElementById("tableHeader").innerHTML=tablecontentsHeader;
      document.getElementById("table").style.display = "block";
+     document.getElementById("table").style.fontfamily = '55px Adventure Regular';
      document.getElementById("table").innerHTML=tablecontents;
 
 }
