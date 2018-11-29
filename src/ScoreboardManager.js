@@ -2,6 +2,8 @@ class ScoreboardManager
 {
   constructor()
   {
+    this.windowWidth = window.innerWidth;
+    this.windowHeight = window.innerHeight;
     this.scoreboard =  []
     this.count = 0
     this.playerName = ""
@@ -16,12 +18,19 @@ class ScoreboardManager
    this.duration=0;
    this.posX=405;
    this.posY=50;
+   this.timerActive = true;
+
 
   }
   startTimer(){
+    this.timerActive = true;
     this.beginDate = new Date();
     console.log(this.beginDate.getTime())
 
+  }
+  stopTimer(){
+
+    this.timerActive = false;
   }
   getTimeMilliSeconds(){
     this.endDate = new Date();
@@ -46,19 +55,23 @@ class ScoreboardManager
   }
   getDisplayTimer()
   {
-    this.diff = this.duration + (((Date.now() - this.beginDate) / 1000) | 0);
+    if(this.timerActive == true){
 
-     // does the same job as parseInt truncates the float
-     this.minutes = (this.diff / 60) | 0;
-     this.seconds = (this.diff % 60) | 0;
+      this.diff = this.duration + (((Date.now() - this.beginDate) / 1000) | 0);
 
-     this.minutes = this.minutes < 10 ? "0" + this.minutes : this.minutes;
-     this.seconds = this.seconds < 10 ? "0" + this.seconds : this.seconds;
+       // does the same job as parseInt truncates the float
+       this.minutes = (this.diff / 60) | 0;
+       this.seconds = (this.diff % 60) | 0;
 
-     return(this.minutes+":"+this.seconds)
+       this.minutes = this.minutes < 10 ? "0" + this.minutes : this.minutes;
+       this.seconds = this.seconds < 10 ? "0" + this.seconds : this.seconds;
 
 
-     setInterval(this.timer, 1000);
+       setInterval(this.timer, 1000);
+
+
+    }
+    return(this.minutes+":"+this.seconds)
 
 
   }
@@ -113,19 +126,23 @@ class ScoreboardManager
   //To the leaderboardd as an object in the form {name: "Aaron", score:100, playerID:1}
   addToBoard(score)
   {
+    this.stopTimer();
 
     if(this.count <1)
     {
-      while (this.playerName === "" && this.playerName !== null)
+      var seconds = this.getTimeSeconds()
+      var time = this.getDisplayTimer()
+      var spm = this.getScorePerMin(score)
+      while (this.playerName === "" || this.playerName == null)
       {
           this.playerName = prompt ("Please enter your name","");
       }
         this.playerID = this.scoreboard.length + 1;
         var object = {name: this.playerName,
                       score: score,
-                      time: this.getDisplayTimer(),
-                      spm: this.getScorePerMin(score),
-                      seconds: this.getTimeSeconds(),
+                      time: time,
+                      spm: spm,
+                      seconds: seconds,
                       playerID: this.playerID}
 
         this.scoreboard.push(object);
@@ -154,7 +171,7 @@ class ScoreboardManager
     {
       return (scoreboard.name == name);
     })
-    
+
   }
 
   filterTime(val)
@@ -198,4 +215,36 @@ class ScoreboardManager
       }
     })
   }
+  generate_table() {
+
+
+
+      var tablecontentsHeader = "";
+      var tablecontents = "";
+      tablecontents = "<table>";
+      tablecontents += "<tr>";
+      tablecontents += "<td>" + "Pos" + "</td>";
+      tablecontents += "<td>" + "Name"+ "</td>";
+      tablecontents += "<td>" + "Time" + "</td>";
+      tablecontents += "<td>" + "Score" + "</td>";
+      tablecontents += "<td>" + "SPM" + "</td>";
+      tablecontents += "</tr>";
+
+      for (var i = 0; i < this.scoreboard.length; i ++)
+     {
+        tablecontents += "<tr>";
+        tablecontents += "<td>" + i + "</td>";
+        tablecontents += "<td>" + this.scoreboard[i].name + "</td>";
+        tablecontents += "<td>" + this.scoreboard[i].time + "</td>";
+        tablecontents += "<td>" + this.scoreboard[i].score + "</td>";
+        tablecontents += "<td>" + this.scoreboard[i].spm + "</td>";
+        tablecontents += "</tr>";
+     }
+     tablecontents += "</table>";
+     document.getElementById("tableHeader").style.display = "block";
+     document.getElementById("tableHeader").innerHTML=tablecontentsHeader;
+     document.getElementById("table").style.display = "block";
+     document.getElementById("table").innerHTML=tablecontents;
+
+}
 }
