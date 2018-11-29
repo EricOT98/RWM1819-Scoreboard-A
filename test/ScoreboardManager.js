@@ -217,8 +217,6 @@ class ScoreboardManager
   }
   generate_table() {
 
-
-
       var tablecontentsHeader = "";
       var tablecontents = "";
       tablecontents = "<table>";
@@ -246,5 +244,5 @@ class ScoreboardManager
      document.getElementById("table").style.display = "block";
      document.getElementById("table").innerHTML=tablecontents;
 
-}
+   }
 }
