@@ -110,6 +110,7 @@ class ScoreboardManager
         sessionStorage.setItem('Scoreboard', JSON.stringify(this.scoreboard));
       }
       this.scoreboard = JSON.parse(sessionStorage.getItem('Scoreboard'));
+      this.scoreboard = JSON.parse(this.scoreboard);
 
       if(this.scoreboard == null)
       {
